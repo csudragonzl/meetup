@@ -1,9 +1,12 @@
 package edu.tjubd.meetup.service;
 
-import java.util.Map;
+import com.google.gson.JsonObject;
+
+import java.text.ParseException;
 import java.util.List;
 
 public interface GroupService {
-    List<Integer> countEventsNum(List<String> timestampList,Boolean isUS);
-    List<Map> countEventNum();
+    List<String> countAllGroups(List<String> timestampList);
+
+    JsonObject countGroupByYear(Integer year) throws ParseException;
 }

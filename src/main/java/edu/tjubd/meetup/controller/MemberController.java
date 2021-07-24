@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import edu.tjubd.meetup.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,5 +40,16 @@ public class MemberController {
         }
         result.put("y", y);
         return new Gson().toJson(result);
+    }
+    @RequestMapping("/biohackMemberByMonth2021")
+//    @RequestMapping("/biohackMemberByMonth2021/{month}")
+    public String memberJoinedByMonth(@RequestParam(value="month", required = true) Integer month)throws FileNotFoundException{
+//    public String memberJoinedByMonth(@PathVariable("month") String month)throws FileNotFoundException{
+        String result;
+        JsonObject data;
+        data=memberService.countMembersByMonth2021(month);
+        result=data.toString();
+//        return new Gson().toJson(result);
+            return result;
     }
 }

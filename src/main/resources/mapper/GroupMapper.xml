@@ -1,23 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.tjubd.meetup.mapper.GroupMapper">
-    <select id="getAllEventNum" resultType="_int">
-        select count(*) from `event` where updated &gt;= #{startTimestamp} and updated &lt; #{endTimestamp}
+    <select id="countJoinedGroups" resultType="_int">
+        select count(*) from `group` where created &lt;= #{Timestamp}
     </select>
-    <select id="getUSEventNum" resultType="_int">
-        select count(*)
-        from
-        (select event_id,group_id,updated from `event` where group_id is not NULL) as A
-        inner JOIN
-        (select group_id,country from `group`) as B
-        ON A.group_id = B.group_id
-        where updated &gt;= #{startTimestamp} and updated &lt; #{endTimestamp} and country = 'US'
+
+    <select id="countJoinedGroupsByYear" resultType="_int">
+        select count(*) from `group` where created &gt;= #{startTimestamp} and created &lt; #{endTimestamp} and country = #{countryName}
     </select>
-    <select id="getEventNumByYear" resultType="map">
-        SELECT years as time,count(*) as num
-        FROM
-        (select FROM_UNIXTIME(cast(cast(updated as UNSIGNED INTEGER)/1000 as UNSIGNED INTEGER),'%Y') AS years,event_id
-        from `event`) as A
-        GROUP BY years
-    </select>
+
+
 </mapper>

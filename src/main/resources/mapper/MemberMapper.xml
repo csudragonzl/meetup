@@ -8,4 +8,8 @@
     <select id="countJoinedMembersByTopic" resultType="_int">
         select count(*) from `member` where joined &gt;= #{startTimestamp} and joined &lt; #{endTimestamp} and group_id = #{groupId}
     </select>
+
+    <select id="countJoinedMembersByMonth2021" resultType="_int">
+        select count(*) from `member` where joined &gt;= #{startTimestamp} and joined &lt; #{endTimestamp} and country = #{countryName}
+    </select>
 </mapper>
