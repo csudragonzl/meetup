@@ -22,6 +22,7 @@ public class MemberServiceImpl implements MemberService {
         List<Integer> result = new ArrayList<>();
         for(int i=0;i<timestampList.size() - 1;i++){
             int counts = memberMapper.countJoinedMembers(timestampList.get(i), timestampList.get(i + 1));
+
             result.add(counts);
         }
         return result;
