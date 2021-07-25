@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.tjubd.meetup.mapper.GroupMapper">
-    <select id="countJoinedGroups" resultType="_int">
-        select count(*) from `group` where created &lt;= #{Timestamp}
+    <select id="countGroupByYear" resultType="_int">
+        select count(*) from `group` where created &gt;= #{startTimestamp} and created &lt; #{endTimestamp}
     </select>
 
-    <select id="countJoinedGroupsByYear" resultType="_int">
-        select count(*) from `group` where created &gt;= #{startTimestamp} and created &lt; #{endTimestamp} and country = #{countryName}
+    <select id="countGroupByCountry" resultType="map">
+        select country,COUNT(country) as num from `group` where created &gt;= #{startTimestamp} and created &lt; #{endTimestamp} GROUP BY country
     </select>
 
-
+    <select id="countGroupByYearInAmerica" resultType="_int">
+        select count(*) from `group` where created &gt;= #{startTimestamp} and created &lt; #{endTimestamp} and country = "US"
+    </select>
 </mapper>
