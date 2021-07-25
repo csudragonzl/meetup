@@ -66,6 +66,18 @@ public class GroupServiceImpl implements GroupService {
             result.add(String.valueOf(counts));
         }
         return result;
+    }
 
+    @Override
+    public List<String> countAllGroupsInAmericaAdd(List<String> timestampList) {
+        List<String> result = new ArrayList<>();
+        for(int i = 0; i < timestampList.size() - 1; i++){
+            System.out.println(timestampList.get(i));System.out.println(timestampList.get(i + 1));
+            groupMapper.countGroupByYearInAmerica(timestampList.get(i), timestampList.get(i + 1));
+            int counts = groupMapper.countGroupByYearInAmerica(timestampList.get(0), timestampList.get(i + 1));
+            //System.out.println(timestampList.get(i));
+            result.add(String.valueOf(counts));
+        }
+        return result;
     }
 }

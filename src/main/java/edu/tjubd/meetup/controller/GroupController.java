@@ -122,4 +122,32 @@ public class GroupController {
         result.put("meta", meta);
         return new Gson().toJson(result);
     }
+
+    // 生物黑客组织创建年度数量（美国累加）
+    @RequestMapping("/biohackGroupsAddUSA")
+    public String biohackGroupsUSAAdd() throws FileNotFoundException{
+        List<String> timestampList = List.of("1009814400000", "1041350400000", "1072886400000", "1104508800000",
+                "1136044800000", "1167580800000", "1199116800000", "1230739200000", "1262275200000",
+                "1293811200000", "1325347200000", "1356969600000", "1388505600000", "1420041600000", "1451577600000",
+                "1483200000000", "1514736000000", "1546272000000", "1577808000000", "1609430400000", "1640966400000");
+        List<Integer> x = List.of(2002, 2003, 2004, 2005, 2006, 2007, 2008,2009,
+                2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018,
+                2019, 2020, 2021);
+        Map result = new HashMap();
+        List<String> countByYear = groupService.countAllGroupsInAmericaAdd(timestampList);
+        List<Map> time_num = new ArrayList<>();
+        for(int i = 0; i < x.size(); i++){
+            Map tmp = new HashMap();
+            tmp.put("time", x.get(i));
+            tmp.put("num", countByYear.get(i));
+            time_num.add(tmp);
+        }
+        Map meta = new HashMap();
+        meta.put("msg","获取成功");
+        meta.put("status", 200);
+
+        result.put("data",time_num);
+        result.put("meta", meta);
+        return new Gson().toJson(result);
+    }
 }

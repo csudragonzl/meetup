@@ -9,6 +9,10 @@ public interface GroupService {
     List<Map> countAllGroupsByCountry(List<String> timestampList);
     // 生物黑客组织创建年度数量（累加）
     Map countAllGroupsByCountryByAdd(String starttimestamp, String endtimestamp);
+
     // 生物黑客组织创建年度数量（美国当年新创建数量）
     List<String> countAllGroupsInAmerica(List<String> timestampList);
+
+    // 生物黑客组织创建年度数量（美国当年新创建数量）
+    List<String> countAllGroupsInAmericaAdd(List<String> timestampList);
 }
