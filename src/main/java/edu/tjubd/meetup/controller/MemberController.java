@@ -1,6 +1,7 @@
 package edu.tjubd.meetup.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import edu.tjubd.meetup.service.MemberService;
@@ -23,7 +24,7 @@ public class MemberController {
     private MemberService memberService;
 
     @RequestMapping("/statistics")
-    public String membersJoinedAnalyze(@RequestParam(value = "topicName", required = false)String topicName) throws FileNotFoundException {
+    public String membersJoinedAnalyze(@RequestParam(value = "topicName", required = false)String topicName){
         List<String> timestampList = List.of("1609430400000", "1612108800000", "1614528000000", "1617206400000",
                 "1619798400000", "1622476800000", "1625068800000", "1627747200000",
                 "1630425600000", "1633017600000", "1635696000000", "1638288000000", "1640966400000");
@@ -41,6 +42,30 @@ public class MemberController {
         result.put("y", y);
         return new Gson().toJson(result);
     }
+
+    @RequestMapping("/biogroupsMembersNum")
+    public String bioGroupsMembersNum(){
+        List<String> timestampList = List.of("1262275200000", "1293811200000", "1325347200000", "1356969600000",
+                "1388505600000", "1420041600000", "1451577600000", "1483200000000",
+                "1514736000000", "1546272000000", "1577808000000", "1609430400000", "1640966400000");
+        List<String> x = List.of("2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021");
+        JsonObject result = new JsonObject();
+        JsonArray list = new JsonArray();
+        List<Integer> y = memberService.countAllMembers(timestampList);
+        for(int i=0;i<y.size();i++){
+            JsonObject temp = new JsonObject();
+            temp.addProperty("time", x.get(i));
+            temp.addProperty("num", y.get(i));
+            list.add(temp);
+        }
+        JsonObject msg =new JsonObject();
+        msg.addProperty("msg","获取成功");
+        msg.addProperty("status",200);
+        result.add("data",list);
+        result.add("meta",msg);
+        return new Gson().toJson(result);
+    }
+
     @RequestMapping("/biohackMemberByMonth2021")
 //    @RequestMapping("/biohackMemberByMonth2021/{month}")
     public String memberJoinedByMonth(@RequestParam(value="month", required = true) Integer month)throws FileNotFoundException{
